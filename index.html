@@ -1525,7 +1525,11 @@ const cppEnabled = new Set(["344","125","14","283","26","27","88"]);
 // Only show C++ for problems whose C++ topic has actually been covered.
 document.querySelectorAll(".cpp-row").forEach(row => {
   const id = row.dataset.cppRow;
-  row.style.display = cppEnabled.has(id) ? "" : "none";
+  if (cppEnabled.has(id)) {
+    row.classList.add("enabled");
+  } else {
+    row.remove();
+  }
 });
 
 function storageKey(lang, id) {

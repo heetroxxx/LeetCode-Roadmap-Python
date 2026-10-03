@@ -38,21 +38,14 @@ body{
   border-radius:22px;
   padding:18px;
 }
-.stats{display:flex;justify-content:space-between;align-items:center}
-.percent{font-size:32px;font-weight:700}
-.bar{
-  height:12px;
-  background:#1e293b;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:14px;
-}
-.fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#22c55e,#4ade80);
-  transition:.3s;
-}
+.progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.language-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px}
+.language-title{font-size:15px;color:var(--muted);margin-bottom:4px}
+.language-percent{font-size:28px;font-weight:700}
+.language-count{font-size:17px;font-weight:700;margin-top:2px}
+.language-bar{height:10px;background:#1e293b;border-radius:999px;overflow:hidden;margin-top:12px}
+.language-fill{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#4ade80);transition:.3s}
+@media(max-width:650px){.progress-grid{grid-template-columns:1fr}}
 .topic{
   background:rgba(255,255,255,.05);
   backdrop-filter:blur(12px);
@@ -111,10 +104,192 @@ input:checked::before{
 .footer{text-align:center;color:var(--muted);margin-top:30px;font-size:13px}
 
 .problem{margin-bottom:4px}
-.solution-btn{margin:0 10px 10px 44px;padding:7px 12px;border:1px solid #334155;border-radius:9px;background:#172033;color:#7dd3fc;cursor:pointer;font-size:13px;transition:.2s}
+.problem-main{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.problem-title{flex:1;min-width:0}
+.problem-tracker{display:flex;gap:6px;flex-shrink:0}
+.status{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid #334155;color:#64748b;background:#111827}
+.status.active{color:#4ade80;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.10)}
+.problem-details{margin:0 10px 10px 44px}
+.problem-details summary{cursor:pointer;color:#7dd3fc;font-size:13px;padding:7px 0;list-style:none}
+.problem-details summary::-webkit-details-marker{display:none}
+.problem-details summary:before{content:"▸";display:inline-block;margin-right:7px;transition:.2s}
+.problem-details[open] summary:before{transform:rotate(90deg)}
+.language-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 10px;background:#0b1220;border:1px solid #1e293b;border-radius:10px;margin-bottom:7px}
+.language-name{min-width:65px;font-weight:700}
+.language-row label{padding:0;gap:8px;background:none!important}
+.language-row input{width:19px;height:19px}
+.solution-btn{padding:7px 12px;border:1px solid #334155;border-radius:9px;background:#172033;color:#7dd3fc;cursor:pointer;font-size:13px;transition:.2s}
 .solution-btn:hover{background:#24324a;border-color:#38bdf8}
-.solution{display:none;margin:0 10px 12px 44px;padding:12px 14px;background:#0b1220;border-left:3px solid #38bdf8;border-radius:9px;color:#cbd5e1;font-size:14px;line-height:1.55;white-space:pre-wrap}
+.solution{display:none;margin:5px 0 10px 28px;padding:12px 14px;background:#0b1220;border-left:3px solid #38bdf8;border-radius:9px;color:#cbd5e1;font-size:14px;line-height:1.55;white-space:pre-wrap}
 .solution.show{display:block}
+.cpp-row{display:none}
+.cpp-row.enabled{display:flex}
+@media(max-width:600px){
+  .problem-main{align-items:flex-start}
+  .problem-tracker{flex-direction:column;align-items:flex-end}
+}
+
+/* Combined Python + C++ problem UI */
+.problem{
+  margin-bottom:4px;
+}
+.problem-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 10px;
+  border-radius:14px;
+}
+.problem-main:hover{
+  background:rgba(255,255,255,.05);
+}
+.problem-title{
+  flex:1;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.question-text{
+  flex:1;
+}
+.problem-marker{
+  width:25px;
+  height:25px;
+  min-width:25px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  border:1px solid #334155;
+  background:#111827;
+  color:#64748b;
+  font-size:15px;
+  user-select:none;
+  pointer-events:none;
+}
+.problem-marker.partial{
+  color:#facc15;
+  border-color:rgba(250,204,21,.35);
+  background:rgba(250,204,21,.10);
+}
+.problem-marker.complete{
+  color:#4ade80;
+  border-color:rgba(34,197,94,.35);
+  background:rgba(34,197,94,.10);
+}
+.problem-details{
+  margin:0 10px 10px 35px;
+}
+.problem-details summary{
+  cursor:pointer;
+  color:#7dd3fc;
+  font-size:13px;
+  padding:7px 0;
+  list-style:none;
+}
+.problem-details summary::-webkit-details-marker{
+  display:none;
+}
+.problem-details summary:before{
+  content:"▸";
+  display:inline-block;
+  margin-right:7px;
+  transition:.2s;
+}
+.problem-details[open] summary:before{
+  transform:rotate(90deg);
+}
+.language-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:9px 10px;
+  background:#0b1220;
+  border:1px solid #1e293b;
+  border-radius:10px;
+  margin-bottom:7px;
+}
+.language-name{
+  min-width:68px;
+  font-weight:700;
+}
+.language-check{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0!important;
+  background:none!important;
+}
+.language-check:hover{
+  background:none!important;
+}
+.language-check input{
+  width:19px;
+  height:19px;
+}
+.solution-btn{
+  padding:7px 12px;
+  border:1px solid #334155;
+  border-radius:9px;
+  background:#172033;
+  color:#7dd3fc;
+  cursor:pointer;
+  font-size:13px;
+  transition:.2s;
+}
+.solution-btn:hover{
+  background:#24324a;
+  border-color:#38bdf8;
+}
+.solution{
+  display:none;
+  width:100%;
+  margin:5px 0 4px 0;
+  padding:12px 14px;
+  background:#080e1a;
+  border-left:3px solid #38bdf8;
+  border-radius:9px;
+  color:#cbd5e1;
+  font-size:14px;
+  line-height:1.55;
+  white-space:pre-wrap;
+  overflow-x:auto;
+}
+.solution.show{
+  display:block;
+}
+.cpp-row{
+  display:none;
+}
+.cpp-row.enabled{
+  display:flex;
+}
+.cpp-logo{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:43px;
+  height:25px;
+  padding:0 7px;
+  border:1px solid #38bdf8;
+  border-radius:7px;
+  color:#38bdf8;
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:-.5px;
+  background:rgba(56,189,248,.08);
+}
+@media(max-width:600px){
+  .problem-main{
+    align-items:flex-start;
+  }
+  .language-row{
+    align-items:flex-start;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -126,42 +301,465 @@ input:checked::before{
 </div>
 
 <div class="progress-card">
-<div class="stats">
-<div>
-<div style="color:var(--muted)">Overall Progress</div>
-<div class="percent" id="percent">0%</div>
+<div class="progress-grid">
+<div class="language-card">
+<div class="language-title">🐍 Python Progress</div>
+<div class="language-percent" id="python-percent">0%</div>
+<div class="language-count" id="python-count">0 / 0</div>
+<div class="language-bar"><div class="language-fill" id="python-fill"></div></div>
 </div>
-<div style="text-align:right">
-<div id="count" style="font-size:24px;font-weight:700">0 / 0</div>
-<div style="color:var(--muted)">Problems Solved</div>
+<div class="language-card">
+<div class="language-title">⚡ C++ Progress</div>
+<div class="language-percent" id="cpp-percent">0%</div>
+<div class="language-count" id="cpp-count">0 / 0</div>
+<div class="language-bar"><div class="language-fill" id="cpp-fill"></div></div>
 </div>
 </div>
-<div class="bar"><div class="fill" id="fill"></div></div>
 </div>
 
 
 <div class="topic">
 <h2>📝 Topic 5 — Strings <span class="badge">3 Problems</span></h2>
-<label><input type="checkbox" data-id="344"><span>LC 344 — Reverse String <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="125"><span>LC 125 — Valid Palindrome <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="14"><span>LC 14 — Longest Common Prefix <span class="difficulty easy">Easy</span></span></label>
+
+<div class="problem" data-problem-id="344">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 344 — Reverse String <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="344">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="344">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="344"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="344">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="344">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="344">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="344"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="125">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 125 — Valid Palindrome <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="125">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="125">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="125"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="125">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="125">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="125">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="125"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="14">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 14 — Longest Common Prefix <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="14">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="14">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="14"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="14">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="14">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="14">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="14"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
 <h2>📦 Topic 7 — Lists / Arrays <span class="badge">4 Problems</span></h2>
-<label><input type="checkbox" data-id="283"><span>LC 283 — Move Zeroes <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="26"><span>LC 26 — Remove Duplicates from Sorted Array <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="27"><span>LC 27 — Remove Element <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="88"><span>LC 88 — Merge Sorted Array <span class="difficulty easy">Easy</span></span></label>
+
+<div class="problem" data-problem-id="283">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 283 — Move Zeroes <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="283">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="283">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="283"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="283">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="283">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="283">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="283"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="26">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 26 — Remove Duplicates from Sorted Array <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="26">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="26">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="26"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="26">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="26">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="26">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="26"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="27">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 27 — Remove Element <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="27">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="27">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="27"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="27">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="27">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="27">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="27"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="88">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 88 — Merge Sorted Array <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="88">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="88">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="88"></div>
+    </div>
+
+    <div class="language-row cpp-row enabled" data-cpp-row="88">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="88">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="88">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="88"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
 <h2>🔗 Topic 8 — Sets <span class="badge">5 Problems</span></h2>
-<label><input type="checkbox" data-id="217"><span>LC 217 — Contains Duplicate <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="349"><span>LC 349 — Intersection of Two Arrays <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="202"><span>LC 202 — Happy Number <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="128"><span>LC 128 — Longest Consecutive Sequence <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="705"><span>LC 705 — Design HashSet <span class="difficulty easy">Easy</span></span></label>
+
+<div class="problem" data-problem-id="217">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 217 — Contains Duplicate <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="217">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="217">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="217"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="217">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="217">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="217">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="217"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="349">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 349 — Intersection of Two Arrays <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="349">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="349">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="349"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="349">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="349">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="349">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="349"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="202">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 202 — Happy Number <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="202">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="202">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="202"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="202">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="202">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="202">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="202"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="128">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 128 — Longest Consecutive Sequence <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="128">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="128">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="128"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="128">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="128">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="128">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="128"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="705">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 705 — Design HashSet <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="705">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="705">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="705"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="705">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="705">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="705">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="705"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
@@ -171,42 +769,742 @@ input:checked::before{
 
 <div class="topic">
 <h2>♻️ Topic 10 — Recursion <span class="badge">4 Problems</span></h2>
-<label><input type="checkbox" data-id="509"><span>LC 509 — Fibonacci Number <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="206"><span>LC 206 — Reverse Linked List <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="104"><span>LC 104 — Maximum Depth of Binary Tree <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="733"><span>LC 733 — Flood Fill <span class="difficulty easy">Easy</span></span></label>
+
+<div class="problem" data-problem-id="509">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 509 — Fibonacci Number <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="509">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="509">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="509"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="509">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="509">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="509">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="509"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="206">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 206 — Reverse Linked List <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="206">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="206">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="206"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="206">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="206">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="206">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="206"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="104">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 104 — Maximum Depth of Binary Tree <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="104">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="104">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="104"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="104">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="104">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="104">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="104"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="733">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 733 — Flood Fill <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="733">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="733">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="733"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="733">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="733">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="733">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="733"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
 <h2>🧰 Topic 13 — Python collections <span class="badge">1 Problem</span></h2>
-<label><input type="checkbox" data-id="239"><span>LC 239 — Sliding Window Maximum <span class="difficulty hard">Hard</span></span></label>
+
+<div class="problem" data-problem-id="239">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 239 — Sliding Window Maximum <span class="difficulty hard">Hard</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="239">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="239">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="239"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="239">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="239">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="239">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="239"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
 <h2>🔐 Topic 14 — Hashing / Hash Maps <span class="badge">7 Problems</span></h2>
-<label><input type="checkbox" data-id="1"><span>LC 1 — Two Sum <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="383"><span>LC 383 — Ransom Note <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="242"><span>LC 242 — Valid Anagram <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="205"><span>LC 205 — Isomorphic Strings <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="49"><span>LC 49 — Group Anagrams <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="387"><span>LC 387 — First Unique Character in a String <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="347"><span>LC 347 — Top K Frequent Elements <span class="difficulty medium">Medium</span></span></label>
+
+<div class="problem" data-problem-id="1">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 1 — Two Sum <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="1">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="1">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="1"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="1">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="1">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="1">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="1"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="383">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 383 — Ransom Note <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="383">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="383">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="383"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="383">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="383">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="383">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="383"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="242">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 242 — Valid Anagram <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="242">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="242">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="242"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="242">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="242">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="242">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="242"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="205">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 205 — Isomorphic Strings <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="205">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="205">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="205"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="205">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="205">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="205">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="205"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="49">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 49 — Group Anagrams <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="49">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="49">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="49"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="49">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="49">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="49">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="49"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="387">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 387 — First Unique Character in a String <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="387">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="387">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="387"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="387">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="387">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="387">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="387"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="347">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 347 — Top K Frequent Elements <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="347">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="347">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="347"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="347">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="347">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="347">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="347"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
 <h2>🪟 Topic 15 — Sliding Window <span class="badge">7 Problems</span></h2>
-<label><input type="checkbox" data-id="643"><span>LC 643 — Maximum Average Subarray I <span class="difficulty easy">Easy</span></span></label>
-<label><input type="checkbox" data-id="1456"><span>LC 1456 — Maximum Number of Vowels in a Substring of Given Length <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="3"><span>LC 3 — Longest Substring Without Repeating Characters <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="567"><span>LC 567 — Permutation in String <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="438"><span>LC 438 — Find All Anagrams in a String <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="209"><span>LC 209 — Minimum Size Subarray Sum <span class="difficulty medium">Medium</span></span></label>
-<label><input type="checkbox" data-id="76"><span>LC 76 — Minimum Window Substring <span class="difficulty hard">Hard</span></span></label>
+
+<div class="problem" data-problem-id="643">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 643 — Maximum Average Subarray I <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="643">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="643">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="643"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="643">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="643">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="643">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="643"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="1456">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 1456 — Maximum Number of Vowels in a Substring of Given Length <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="1456">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="1456">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="1456"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="1456">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="1456">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="1456">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="1456"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="3">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 3 — Longest Substring Without Repeating Characters <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="3">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="3">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="3"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="3">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="3">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="3">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="3"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="567">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 567 — Permutation in String <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="567">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="567">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="567"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="567">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="567">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="567">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="567"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="438">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 438 — Find All Anagrams in a String <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="438">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="438">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="438"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="438">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="438">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="438">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="438"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="209">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 209 — Minimum Size Subarray Sum <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="209">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="209">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="209"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="209">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="209">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="209">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="209"></div>
+    </div>
+  </details>
+</div>
+
+<div class="problem" data-problem-id="76">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 76 — Minimum Window Substring <span class="difficulty hard">Hard</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="76">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="76">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="76"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="76">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="76">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="76">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="76"></div>
+    </div>
+  </details>
+</div>
 </div>
 
 <div class="topic">
 <h2>⭐ Extra / Self-Solved Problems <span class="badge">1 Problem</span></h2>
-<label><input type="checkbox" data-id="9"><span>LC 9 — Palindrome Number <span class="difficulty easy">Easy</span></span></label>
+
+<div class="problem" data-problem-id="9">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 9 — Palindrome Number <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+
+    <div class="language-row">
+      <span class="language-name">🐍 Python</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="python" data-id="9">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="python" data-id="9">
+        See Python Solution
+      </button>
+      <div class="solution" data-solution="python" data-id="9"></div>
+    </div>
+
+    <div class="language-row cpp-row" data-cpp-row="9">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="9">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="9">
+        See C++ Solution
+      </button>
+      <div class="solution" data-solution="cpp" data-id="9"></div>
+    </div>
+  </details>
+</div>
 <div style="color:var(--muted);padding:4px 10px 8px;line-height:1.5">Self-solved by you outside the existing roadmap. If this problem naturally belongs to a topic we study later, it will be moved there and not duplicated.</div>
 </div>
 
@@ -217,60 +1515,119 @@ input:checked::before{
 </div>
 
 
-<script>
-const solutions = {"344": "def reverseString(s):\n    left, right = 0, len(s) - 1\n    while left < right:\n        s[left], s[right] = s[right], s[left]\n        left += 1\n        right -= 1", "125": "def isPalindrome(s):\n    s = ''.join(ch.lower() for ch in s if ch.isalnum())\n    left, right = 0, len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            return False\n        left += 1\n        right -= 1\n    return True", "14": "def longestCommonPrefix(strs):\n    prefix = strs[0]\n    for s in strs[1:]:\n        while not s.startswith(prefix):\n            prefix = prefix[:-1]\n            if prefix == \"\":\n                return \"\"\n    return prefix", "283": "def moveZeroes(nums):\n    insert = 0\n    for num in nums:\n        if num != 0:\n            nums[insert] = num\n            insert += 1\n    while insert < len(nums):\n        nums[insert] = 0\n        insert += 1", "26": "def removeDuplicates(nums):\n    if not nums:\n        return 0\n    insert = 1\n    for i in range(1, len(nums)):\n        if nums[i] != nums[i - 1]:\n            nums[insert] = nums[i]\n            insert += 1\n    return insert", "27": "def removeElement(nums, val):\n    insert = 0\n    for num in nums:\n        if num != val:\n            nums[insert] = num\n            insert += 1\n    return insert", "88": "def merge(nums1, m, nums2, n):\n    i, j, k = m - 1, n - 1, m + n - 1\n    while j >= 0:\n        if i >= 0 and nums1[i] > nums2[j]:\n            nums1[k] = nums1[i]\n            i -= 1\n        else:\n            nums1[k] = nums2[j]\n            j -= 1\n        k -= 1", "217": "def containsDuplicate(nums):\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False", "349": "def intersection(nums1, nums2):\n    return list(set(nums1) & set(nums2))", "202": "def isHappy(n):\n    seen = set()\n    while n != 1 and n not in seen:\n        seen.add(n)\n        total = 0\n        while n > 0:\n            digit = n % 10\n            total += digit * digit\n            n //= 10\n        n = total\n    return n == 1", "128": "def longestConsecutive(nums):\n    values = set(nums)\n    longest = 0\n    for num in values:\n        if num - 1 not in values:\n            length = 1\n            while num + length in values:\n                length += 1\n            longest = max(longest, length)\n    return longest", "705": "class MyHashSet:\n    def __init__(self):\n        self.data = set()\n    def add(self, key):\n        self.data.add(key)\n    def remove(self, key):\n        self.data.discard(key)\n    def contains(self, key):\n        return key in self.data", "509": "def fib(n):\n    if n <= 1:\n        return n\n    return fib(n - 1) + fib(n - 2)", "206": "def reverseList(head):\n    if head is None or head.next is None:\n        return head\n    newHead = reverseList(head.next)\n    head.next.next = head\n    head.next = None\n    return newHead", "104": "def maxDepth(root):\n    if root is None:\n        return 0\n    return 1 + max(maxDepth(root.left), maxDepth(root.right))", "733": "def floodFill(image, sr, sc, color):\n    original = image[sr][sc]\n    if original == color:\n        return image\n    rows, cols = len(image), len(image[0])\n    def dfs(r, c):\n        if r < 0 or r >= rows or c < 0 or c >= cols:\n            return\n        if image[r][c] != original:\n            return\n        image[r][c] = color\n        dfs(r+1, c)\n        dfs(r-1, c)\n        dfs(r, c+1)\n        dfs(r, c-1)\n    dfs(sr, sc)\n    return image", "438": "from collections import Counter\n\ndef findAnagrams(s, p):\n    need = Counter(p)\n    window = Counter()\n    result = []\n    left = 0\n    for right, ch in enumerate(s):\n        window[ch] += 1\n        if right - left + 1 > len(p):\n            old = s[left]\n            window[old] -= 1\n            if window[old] == 0:\n                del window[old]\n            left += 1\n        if window == need:\n            result.append(left)\n    return result", "239": "from collections import deque\n\ndef maxSlidingWindow(nums, k):\n    q = deque()\n    result = []\n    for i, num in enumerate(nums):\n        while q and q[0] <= i - k:\n            q.popleft()\n        while q and nums[q[-1]] <= num:\n            q.pop()\n        q.append(i)\n        if i >= k - 1:\n            result.append(nums[q[0]])\n    return result", "1": "def twoSum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        needed = target - num\n        if needed in seen:\n            return [seen[needed], i]\n        seen[num] = i\n    return []", "383": "def canConstruct(ransomNote, magazine):\n    freq = {}\n    for ch in magazine:\n        freq[ch] = freq.get(ch, 0) + 1\n    for ch in ransomNote:\n        if freq.get(ch, 0) == 0:\n            return False\n        freq[ch] -= 1\n    return True", "242": "def isAnagram(s, t):\n    if len(s) != len(t):\n        return False\n    freq = {}\n    for ch in s:\n        freq[ch] = freq.get(ch, 0) + 1\n    for ch in t:\n        if ch not in freq:\n            return False\n        freq[ch] -= 1\n        if freq[ch] < 0:\n            return False\n    return True", "205": "def isIsomorphic(s, t):\n    s_to_t, t_to_s = {}, {}\n    for a, b in zip(s, t):\n        if a in s_to_t and s_to_t[a] != b:\n            return False\n        if b in t_to_s and t_to_s[b] != a:\n            return False\n        s_to_t[a] = b\n        t_to_s[b] = a\n    return True", "49": "from collections import defaultdict\n\ndef groupAnagrams(strs):\n    groups = defaultdict(list)\n    for word in strs:\n        key = ''.join(sorted(word))\n        groups[key].append(word)\n    return list(groups.values())", "387": "def firstUniqChar(s):\n    freq = {}\n    for ch in s:\n        freq[ch] = freq.get(ch, 0) + 1\n    for i, ch in enumerate(s):\n        if freq[ch] == 1:\n            return i\n    return -1", "347": "def topKFrequent(nums, k):\n    freq = {}\n    for num in nums:\n        freq[num] = freq.get(num, 0) + 1\n    return [num for num, count in sorted(freq.items(), key=lambda x: x[1], reverse=True)[:k]]", "9": "def isPalindrome(x):\n    if x < 0:\n        return False\n    original = x\n    reversed_num = 0\n    while x > 0:\n        reversed_num = reversed_num * 10 + x % 10\n        x //= 10\n    return original == reversed_num", "643": "def findMaxAverage(nums, k):\n    window_sum = sum(nums[:k])\n    max_sum = window_sum\n    left = 0\n\n    for right in range(k, len(nums)):\n        window_sum -= nums[left]\n        window_sum += nums[right]\n        max_sum = max(max_sum, window_sum)\n        left += 1\n\n    return max_sum / k", "1456": "def maxVowels(s, k):\n    vowels = {'a', 'e', 'i', 'o', 'u'}\n    count = sum(1 for ch in s[:k] if ch in vowels)\n    max_count = count\n    left = 0\n\n    for right in range(k, len(s)):\n        if s[left] in vowels:\n            count -= 1\n        if s[right] in vowels:\n            count += 1\n        max_count = max(max_count, count)\n        left += 1\n\n    return max_count", "3": "def lengthOfLongestSubstring(s):\n    seen = set()\n    left = 0\n    answer = 0\n\n    for right in range(len(s)):\n        while s[right] in seen:\n            seen.remove(s[left])\n            left += 1\n        seen.add(s[right])\n        answer = max(answer, right - left + 1)\n\n    return answer", "567": "def checkInclusion(s1, s2):\n    if len(s1) > len(s2):\n        return False\n\n    need = {}\n    window = {}\n\n    for ch in s1:\n        need[ch] = need.get(ch, 0) + 1\n\n    for ch in s2[:len(s1)]:\n        window[ch] = window.get(ch, 0) + 1\n\n    left = 0\n    right = len(s1)\n\n    if window == need:\n        return True\n\n    while right < len(s2):\n        left_ch = s2[left]\n        window[left_ch] -= 1\n        if window[left_ch] == 0:\n            del window[left_ch]\n\n        window[s2[right]] = window.get(s2[right], 0) + 1\n        left += 1\n        right += 1\n\n        if window == need:\n            return True\n\n    return False", "209": "def minSubArrayLen(target, nums):\n    left = 0\n    window_sum = 0\n    answer = float('inf')\n\n    for right in range(len(nums)):\n        window_sum += nums[right]\n\n        while window_sum >= target:\n            answer = min(answer, right - left + 1)\n            window_sum -= nums[left]\n            left += 1\n\n    return 0 if answer == float('inf') else answer", "76": "def minWindow(s, t):\n    need = {}\n\n    for ch in t:\n        need[ch] = need.get(ch, 0) + 1\n\n    window = {}\n    left = 0\n    min_length = float('inf')\n    start = 0\n\n    for right in range(len(s)):\n        ch = s[right]\n        window[ch] = window.get(ch, 0) + 1\n\n        valid = True\n        for ch in need:\n            if window.get(ch, 0) < need[ch]:\n                valid = False\n                break\n\n        while valid:\n            current_length = right - left + 1\n\n            if current_length < min_length:\n                min_length = current_length\n                start = left\n\n            left_ch = s[left]\n            window[left_ch] -= 1\n            left += 1\n\n            valid = True\n            for ch in need:\n                if window.get(ch, 0) < need[ch]:\n                    valid = False\n                    break\n\n    if min_length == float('inf'):\n        return \"\"\n\n    return s[start:start + min_length]"};
-
-document.querySelectorAll('label').forEach(label => {
-  const box = label.querySelector('input[data-id]');
-  if (!box || !solutions[box.dataset.id]) return;
-  const wrapper = document.createElement('div');
-  wrapper.className = 'problem';
-  label.parentNode.insertBefore(wrapper, label);
-  wrapper.appendChild(label);
-  const button = document.createElement('button');
-  button.className = 'solution-btn';
-  button.type = 'button';
-  button.textContent = 'Show Solution';
-  const solution = document.createElement('div');
-  solution.className = 'solution';
-  solution.textContent = solutions[box.dataset.id];
-  button.addEventListener('click', () => {
-    const open = solution.classList.toggle('show');
-    button.textContent = open ? 'Hide Solution' : 'Show Solution';
-  });
-  wrapper.appendChild(button);
-  wrapper.appendChild(solution);
-});
-</script>
 
 <script>
-const boxes=[...document.querySelectorAll("input[type=checkbox]")];
+const pythonSolutions = {"344": "def reverseString(s):\n    left, right = 0, len(s) - 1\n    while left < right:\n        s[left], s[right] = s[right], s[left]\n        left += 1\n        right -= 1", "125": "def isPalindrome(s):\n    s = ''.join(ch.lower() for ch in s if ch.isalnum())\n    left, right = 0, len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            return False\n        left += 1\n        right -= 1\n    return True", "14": "def longestCommonPrefix(strs):\n    prefix = strs[0]\n    for s in strs[1:]:\n        while not s.startswith(prefix):\n            prefix = prefix[:-1]\n            if prefix == \"\":\n                return \"\"\n    return prefix", "283": "def moveZeroes(nums):\n    insert = 0\n    for num in nums:\n        if num != 0:\n            nums[insert] = num\n            insert += 1\n    while insert < len(nums):\n        nums[insert] = 0\n        insert += 1", "26": "def removeDuplicates(nums):\n    if not nums:\n        return 0\n    insert = 1\n    for i in range(1, len(nums)):\n        if nums[i] != nums[i - 1]:\n            nums[insert] = nums[i]\n            insert += 1\n    return insert", "27": "def removeElement(nums, val):\n    insert = 0\n    for num in nums:\n        if num != val:\n            nums[insert] = num\n            insert += 1\n    return insert", "88": "def merge(nums1, m, nums2, n):\n    i, j, k = m - 1, n - 1, m + n - 1\n    while j >= 0:\n        if i >= 0 and nums1[i] > nums2[j]:\n            nums1[k] = nums1[i]\n            i -= 1\n        else:\n            nums1[k] = nums2[j]\n            j -= 1\n        k -= 1", "217": "def containsDuplicate(nums):\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False", "349": "def intersection(nums1, nums2):\n    return list(set(nums1) & set(nums2))", "202": "def isHappy(n):\n    seen = set()\n    while n != 1 and n not in seen:\n        seen.add(n)\n        total = 0\n        while n > 0:\n            digit = n % 10\n            total += digit * digit\n            n //= 10\n        n = total\n    return n == 1", "128": "def longestConsecutive(nums):\n    values = set(nums)\n    longest = 0\n    for num in values:\n        if num - 1 not in values:\n            length = 1\n            while num + length in values:\n                length += 1\n            longest = max(longest, length)\n    return longest", "705": "class MyHashSet:\n    def __init__(self):\n        self.data = set()\n    def add(self, key):\n        self.data.add(key)\n    def remove(self, key):\n        self.data.discard(key)\n    def contains(self, key):\n        return key in self.data", "509": "def fib(n):\n    if n <= 1:\n        return n\n    return fib(n - 1) + fib(n - 2)", "206": "def reverseList(head):\n    if head is None or head.next is None:\n        return head\n    newHead = reverseList(head.next)\n    head.next.next = head\n    head.next = None\n    return newHead", "104": "def maxDepth(root):\n    if root is None:\n        return 0\n    return 1 + max(maxDepth(root.left), maxDepth(root.right))", "733": "def floodFill(image, sr, sc, color):\n    original = image[sr][sc]\n    if original == color:\n        return image\n    rows, cols = len(image), len(image[0])\n    def dfs(r, c):\n        if r < 0 or r >= rows or c < 0 or c >= cols:\n            return\n        if image[r][c] != original:\n            return\n        image[r][c] = color\n        dfs(r+1, c)\n        dfs(r-1, c)\n        dfs(r, c+1)\n        dfs(r, c-1)\n    dfs(sr, sc)\n    return image", "438": "from collections import Counter\n\ndef findAnagrams(s, p):\n    need = Counter(p)\n    window = Counter()\n    result = []\n    left = 0\n    for right, ch in enumerate(s):\n        window[ch] += 1\n        if right - left + 1 > len(p):\n            old = s[left]\n            window[old] -= 1\n            if window[old] == 0:\n                del window[old]\n            left += 1\n        if window == need:\n            result.append(left)\n    return result", "239": "from collections import deque\n\ndef maxSlidingWindow(nums, k):\n    q = deque()\n    result = []\n    for i, num in enumerate(nums):\n        while q and q[0] <= i - k:\n            q.popleft()\n        while q and nums[q[-1]] <= num:\n            q.pop()\n        q.append(i)\n        if i >= k - 1:\n            result.append(nums[q[0]])\n    return result", "1": "def twoSum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        needed = target - num\n        if needed in seen:\n            return [seen[needed], i]\n        seen[num] = i\n    return []", "383": "def canConstruct(ransomNote, magazine):\n    freq = {}\n    for ch in magazine:\n        freq[ch] = freq.get(ch, 0) + 1\n    for ch in ransomNote:\n        if freq.get(ch, 0) == 0:\n            return False\n        freq[ch] -= 1\n    return True", "242": "def isAnagram(s, t):\n    if len(s) != len(t):\n        return False\n    freq = {}\n    for ch in s:\n        freq[ch] = freq.get(ch, 0) + 1\n    for ch in t:\n        if ch not in freq:\n            return False\n        freq[ch] -= 1\n        if freq[ch] < 0:\n            return False\n    return True", "205": "def isIsomorphic(s, t):\n    s_to_t, t_to_s = {}, {}\n    for a, b in zip(s, t):\n        if a in s_to_t and s_to_t[a] != b:\n            return False\n        if b in t_to_s and t_to_s[b] != a:\n            return False\n        s_to_t[a] = b\n        t_to_s[b] = a\n    return True", "49": "from collections import defaultdict\n\ndef groupAnagrams(strs):\n    groups = defaultdict(list)\n    for word in strs:\n        key = ''.join(sorted(word))\n        groups[key].append(word)\n    return list(groups.values())", "387": "def firstUniqChar(s):\n    freq = {}\n    for ch in s:\n        freq[ch] = freq.get(ch, 0) + 1\n    for i, ch in enumerate(s):\n        if freq[ch] == 1:\n            return i\n    return -1", "347": "def topKFrequent(nums, k):\n    freq = {}\n    for num in nums:\n        freq[num] = freq.get(num, 0) + 1\n    return [num for num, count in sorted(freq.items(), key=lambda x: x[1], reverse=True)[:k]]", "9": "def isPalindrome(x):\n    if x < 0:\n        return False\n    original = x\n    reversed_num = 0\n    while x > 0:\n        reversed_num = reversed_num * 10 + x % 10\n        x //= 10\n    return original == reversed_num", "643": "def findMaxAverage(nums, k):\n    window_sum = sum(nums[:k])\n    max_sum = window_sum\n    left = 0\n\n    for right in range(k, len(nums)):\n        window_sum -= nums[left]\n        window_sum += nums[right]\n        max_sum = max(max_sum, window_sum)\n        left += 1\n\n    return max_sum / k", "1456": "def maxVowels(s, k):\n    vowels = {'a', 'e', 'i', 'o', 'u'}\n    count = sum(1 for ch in s[:k] if ch in vowels)\n    max_count = count\n    left = 0\n\n    for right in range(k, len(s)):\n        if s[left] in vowels:\n            count -= 1\n        if s[right] in vowels:\n            count += 1\n        max_count = max(max_count, count)\n        left += 1\n\n    return max_count", "3": "def lengthOfLongestSubstring(s):\n    seen = set()\n    left = 0\n    answer = 0\n\n    for right in range(len(s)):\n        while s[right] in seen:\n            seen.remove(s[left])\n            left += 1\n        seen.add(s[right])\n        answer = max(answer, right - left + 1)\n\n    return answer", "567": "def checkInclusion(s1, s2):\n    if len(s1) > len(s2):\n        return False\n\n    need = {}\n    window = {}\n\n    for ch in s1:\n        need[ch] = need.get(ch, 0) + 1\n\n    for ch in s2[:len(s1)]:\n        window[ch] = window.get(ch, 0) + 1\n\n    left = 0\n    right = len(s1)\n\n    if window == need:\n        return True\n\n    while right < len(s2):\n        left_ch = s2[left]\n        window[left_ch] -= 1\n        if window[left_ch] == 0:\n            del window[left_ch]\n\n        window[s2[right]] = window.get(s2[right], 0) + 1\n        left += 1\n        right += 1\n\n        if window == need:\n            return True\n\n    return False", "209": "def minSubArrayLen(target, nums):\n    left = 0\n    window_sum = 0\n    answer = float('inf')\n\n    for right in range(len(nums)):\n        window_sum += nums[right]\n\n        while window_sum >= target:\n            answer = min(answer, right - left + 1)\n            window_sum -= nums[left]\n            left += 1\n\n    return 0 if answer == float('inf') else answer", "76": "def minWindow(s, t):\n    need = {}\n\n    for ch in t:\n        need[ch] = need.get(ch, 0) + 1\n\n    window = {}\n    left = 0\n    min_length = float('inf')\n    start = 0\n\n    for right in range(len(s)):\n        ch = s[right]\n        window[ch] = window.get(ch, 0) + 1\n\n        valid = True\n        for ch in need:\n            if window.get(ch, 0) < need[ch]:\n                valid = False\n                break\n\n        while valid:\n            current_length = right - left + 1\n\n            if current_length < min_length:\n                min_length = current_length\n                start = left\n\n            left_ch = s[left]\n            window[left_ch] -= 1\n            left += 1\n\n            valid = True\n            for ch in need:\n                if window.get(ch, 0) < need[ch]:\n                    valid = False\n                    break\n\n    if min_length == float('inf'):\n        return \"\"\n\n    return s[start:start + min_length]"};
+const cppSolutions = {};
+const cppEnabled = new Set(["344","125","14","283","26","27","88"]);
 
-boxes.forEach(box=>{
-  const key="lc_"+box.dataset.id;
-  const saved=localStorage.getItem(key);
-  if(saved!==null) box.checked=saved==="1";
-  box.addEventListener("change",()=>{
-    localStorage.setItem(key,box.checked?"1":"0");
-    update();
-  });
-});
+function storageKey(lang,id) {
+  return "lc_" + lang + "_" + id;
+}
 
-function update(){
-  const done=boxes.filter(b=>b.checked).length;
-  const total=boxes.length;
-  const pct=Math.round(done/total*100);
-  document.getElementById("count").textContent=`${done} / ${total}`;
-  document.getElementById("percent").textContent=`${pct}%`;
-  document.getElementById("fill").style.width=pct+"%";
-  boxes.forEach(b=>{
-    const span=b.parentElement.querySelector("span");
-    span.classList.toggle("done",b.checked);
+function updateLanguageTracker(lang) {
+  const boxes = Array.from(document.querySelectorAll(
+    'input[type="checkbox"][data-lang="' + lang + '"]'
+  ));
+  const done = boxes.filter(b => b.checked).length;
+  const total = boxes.length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  document.getElementById(lang + "-count").textContent = done + " / " + total;
+  document.getElementById(lang + "-percent").textContent = pct + "%";
+  document.getElementById(lang + "-fill").style.width = pct + "%";
+}
+
+function updateMarkers() {
+  document.querySelectorAll(".problem").forEach(problem => {
+    const py = problem.querySelector('input[data-lang="python"]');
+    const cpp = problem.querySelector('input[data-lang="cpp"]');
+    const marker = problem.querySelector(".problem-marker");
+    if (!marker) return;
+
+    const pyDone = py ? py.checked : false;
+    const cppDone = cpp ? cpp.checked : false;
+
+    marker.classList.remove("partial","complete");
+
+    if (pyDone && cppDone) {
+      marker.textContent = "●";
+      marker.title = "Completed in Python and C++";
+      marker.classList.add("complete");
+    } else if (pyDone || cppDone) {
+      marker.textContent = "◐";
+      marker.title = "Completed in one language";
+      marker.classList.add("partial");
+    } else {
+      marker.textContent = "◌";
+      marker.title = "Not completed yet";
+    }
   });
 }
-update();
-</script>
 
+function updateAll() {
+  updateLanguageTracker("python");
+  updateLanguageTracker("cpp");
+  updateMarkers();
+}
+
+document.querySelectorAll(".problem").forEach(problem => {
+  const id = problem.dataset.problemId;
+  const py = problem.querySelector('input[data-lang="python"]');
+  const cpp = problem.querySelector('input[data-lang="cpp"]');
+
+  if (py) {
+    const newKey = storageKey("python",id);
+    const oldKey = "lc_" + id;
+    if (localStorage.getItem(newKey) === null) {
+      const oldValue = localStorage.getItem(oldKey);
+      if (oldValue !== null) localStorage.setItem(newKey,oldValue);
+    }
+    const saved = localStorage.getItem(newKey);
+    if (saved !== null) py.checked = saved === "1";
+
+    py.addEventListener("change",function() {
+      localStorage.setItem(newKey,this.checked ? "1" : "0");
+      updateAll();
+    });
+  }
+
+  if (cpp) {
+    const cppKey = storageKey("cpp",id);
+    const saved = localStorage.getItem(cppKey);
+    if (saved !== null) cpp.checked = saved === "1";
+
+    cpp.addEventListener("change",function() {
+      localStorage.setItem(cppKey,this.checked ? "1" : "0");
+      updateAll();
+    });
+  }
+
+  const pySolution = problem.querySelector('[data-solution="python"]');
+  if (pySolution) pySolution.textContent =
+    pythonSolutions[id] || "Python solution not available.";
+
+  const cppSolution = problem.querySelector('[data-solution="cpp"]');
+  if (cppSolution) cppSolution.textContent =
+    cppSolutions[id] || "C++ solution will be added when we solve this problem in C++.";
+
+  problem.querySelectorAll(".solution-btn").forEach(button => {
+    button.addEventListener("click",function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const lang = this.dataset.lang;
+      const solution = problem.querySelector('[data-solution="' + lang + '"]');
+      if (!solution) return;
+      const open = solution.classList.toggle("show");
+      this.textContent = open
+        ? "Hide " + (lang === "python" ? "Python" : "C++") + " Solution"
+        : "See " + (lang === "python" ? "Python" : "C++") + " Solution";
+    });
+  });
+});
+
+updateAll();
+</script>
 
 </body>
 </html>

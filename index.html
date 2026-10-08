@@ -579,7 +579,7 @@ input:checked::before{
 </div>
 
 <div class="topic">
-<h2>🔎 C++ Topic 5 — Searching <span class="badge">2 Problems</span></h2>
+<h2>🔎 C++ Topic 5 — Searching <span class="badge">3 Problems</span></h2>
 
 <div class="problem" data-problem-id="35">
   <div class="problem-main">
@@ -619,6 +619,52 @@ input:checked::before{
       </label>
       <button class="solution-btn" type="button" data-lang="cpp" data-id="34">See C++ Solution</button>
       <div class="solution" data-solution="cpp" data-id="34"></div>
+    </div>
+  </details>
+
+<div class="problem" data-problem-id="704">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 704 — Binary Search <span class="difficulty easy">Easy</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+    <div class="language-row cpp-row enabled" data-cpp-row="704">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="704">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="704">See C++ Solution</button>
+      <div class="solution" data-solution="cpp" data-id="704"></div>
+    </div>
+  </details>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<h2>🔽 C++ Topic 6 — Sorting <span class="badge">1 Problem</span></h2>
+
+<div class="problem" data-problem-id="912">
+  <div class="problem-main">
+    <div class="problem-title">
+      <span class="problem-marker" title="Not completed yet">◌</span>
+      <span class="question-text">LC 912 — Sort an Array <span class="difficulty medium">Medium</span></span>
+    </div>
+  </div>
+  <details class="problem-details">
+    <summary>Languages &amp; Solutions</summary>
+    <div class="language-row cpp-row enabled" data-cpp-row="912">
+      <span class="language-name cpp-logo">C++</span>
+      <label class="language-check">
+        <input type="checkbox" data-lang="cpp" data-id="912">
+        <span>Done</span>
+      </label>
+      <button class="solution-btn" type="button" data-lang="cpp" data-id="912">See C++ Solution</button>
+      <div class="solution" data-solution="cpp" data-id="912"></div>
     </div>
   </details>
 </div>
@@ -791,18 +837,6 @@ input:checked::before{
         See Python Solution
       </button>
       <div class="solution" data-solution="python" data-id="705"></div>
-    </div>
-
-    <div class="language-row cpp-row" data-cpp-row="705">
-      <span class="language-name cpp-logo">C++</span>
-      <label class="language-check">
-        <input type="checkbox" data-lang="cpp" data-id="705">
-        <span>Done</span>
-      </label>
-      <button class="solution-btn" type="button" data-lang="cpp" data-id="705">
-        See C++ Solution
-      </button>
-      <div class="solution" data-solution="cpp" data-id="705"></div>
     </div>
   </details>
 </div>
@@ -1696,6 +1730,23 @@ public:
         }
     }
 };`,
+"704": `class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) left = mid + 1;
+            else right = mid - 1;
+        }
+
+        return -1;
+    }
+},
 "35": `class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
@@ -1791,9 +1842,141 @@ public:
         return answer;
     }
 };`
+"912": `class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        return nums;
+    }
+};`,
+"705": `class MyHashSet {
+private:
+    unordered_set<int> s;
+
+public:
+    MyHashSet() {}
+
+    void add(int key) {
+        s.insert(key);
+    }
+
+    void remove(int key) {
+        s.erase(key);
+    }
+
+    bool contains(int key) {
+        return s.count(key);
+    }
+};`,
+"242": `class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.size() != t.size()) return false;
+        unordered_map<char, int> freq;
+        for (char c : s) freq[c]++;
+        for (char c : t) freq[c]--;
+        for (const auto& p : freq) {
+            if (p.second != 0) return false;
+        }
+        return true;
+    }
+};`,
+"383": `class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        unordered_map<char, int> freq;
+        for (char c : magazine) freq[c]++;
+        for (char c : ransomNote) {
+            if (freq[c] == 0) return false;
+            freq[c]--;
+        }
+        return true;
+    }
+};`,
+"205": `class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        unordered_map<char, char> st;
+        unordered_map<char, char> ts;
+        for (int i = 0; i < s.size(); i++) {
+            char a = s[i], b = t[i];
+            if (st.count(a) && st[a] != b) return false;
+            if (ts.count(b) && ts[b] != a) return false;
+            st[a] = b;
+            ts[b] = a;
+        }
+        return true;
+    }
+};`,
+"387": `class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char, int> freq;
+        for (char c : s) freq[c]++;
+        for (int i = 0; i < s.size(); i++) {
+            if (freq[s[i]] == 1) return i;
+        }
+        return -1;
+    }
+};`,
+"1": `class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> seen;
+        for (int i = 0; i < nums.size(); i++) {
+            int needed = target - nums[i];
+            if (seen.count(needed)) {
+                return {seen[needed], i};
+            }
+            seen[nums[i]] = i;
+        }
+        return {};
+    }
+};`,
+"49": `class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> groups;
+        for (string s : strs) {
+            string key = s;
+            sort(key.begin(), key.end());
+            groups[key].push_back(s);
+        }
+        vector<vector<string>> result;
+        for (const auto& kv : groups) {
+            result.push_back(kv.second);
+        }
+        return result;
+    }
+};`,
+"347": `class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> freq;
+        for (int x : nums) {
+            freq[x]++;
+        }
+
+        vector<pair<int, int>> elements;
+        for (const auto& p : freq) {
+            elements.push_back({p.second, p.first});
+        }
+
+        sort(elements.begin(), elements.end(),
+             [](const pair<int,int>& a, const pair<int,int>& b) {
+                 return a.first > b.first;
+             });
+
+        vector<int> result;
+        for (int i = 0; i < k; i++) {
+            result.push_back(elements[i].second);
+        }
+        return result;
+    }
+};`,
 };
 
-const cppEnabled = new Set(["344","125","14","283","26","27","88","35","34","217","349","202","128","238"]);
+const cppEnabled = new Set(["344","125","14","283","26","27","88","35","34","704","912","217","349","202","128","242","383","205","387","1","49","347","238"]);
 
 // Every problem with a C++ option has a C++ solution.
 // cppEnabled controls which problems display the C++ option; each enabled problem has a solution in cppSolutions.
